@@ -1497,28 +1497,28 @@ zabbix_export:
               units: '%'
               trigger_prototypes:
                 - uuid: dc83b9fef5544c2785c2eefb04e91df7
-                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA01})=0'
+                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA01})=1'
                   name: '[VEEAM-CST] [{#VEEAMREPO}] Repo - Free space (%) not updated'
                   priority: WARNING
                   dependencies:
                     - name: '[VEEAM-CST] [{#VEEAMREPO}] Repo - Free space (%) not updated'
-                      expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA02})=0'
+                      expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA02})=1'
                 - uuid: 90b2d43e90b043e382533e64d1391b40
-                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA02})=0'
+                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA02})=1'
                   name: '[VEEAM-CST] [{#VEEAMREPO}] Repo - Free space (%) not updated'
                   priority: AVERAGE
                   dependencies:
                     - name: '[VEEAM-CST] [{#VEEAMREPO}] Repo - Free space (%) not updated'
-                      expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA03})=0'
+                      expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA03})=1'
                 - uuid: f7bfceed2537436fbd1f85ac731c9c20
-                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA03})=0'
+                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA03})=1'
                   name: '[VEEAM-CST] [{#VEEAMREPO}] Repo - Free space (%) not updated'
                   priority: HIGH
                   dependencies:
                     - name: '[VEEAM-CST] [{#VEEAMREPO}] Repo - Free space (%) not updated'
-                      expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA04})=0'
+                      expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA04})=1'
                 - uuid: 12f94c21a19e4c0d8a137f72cc7d2477
-                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA04})=0'
+                  expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.repo.used_percent[{#VEEAMREPO}],{$VEEAM.CST_NODATA04})=1'
                   name: '[VEEAM-CST] [{#VEEAMREPO}] Repo - Free space (%) not updated'
                   priority: DISASTER
                 - uuid: f5a62d90e20a4017b32b924c30035ef7
