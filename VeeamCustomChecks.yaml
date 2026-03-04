@@ -16,12 +16,7 @@ zabbix_export:
         
         Status 0: Backup succeded
         
-        The names of the items contains the Target of the backup.
-        R: Use the RepositoryId tag in the work_details field (Image clone)
-        D: Use the hostDnsName tag in the work_details field (Usually Replica jobs)
-        A: Try to get informations for the backup with an agent installed
-        
-        Change the path of the executable in the item "[VEEAM] Collect Data" if needed
+        Change the path of the executable in the item "[VEEAM] Collect Data" if needed and also zabbix_sender.exe/zabbix_agentd.win.conf path in $ZabbixBasePath\data_apps\VeeamCustomChecks.exe.conf
       groups:
         - name: "Templates - \t0_CST_TPL"
       items:
