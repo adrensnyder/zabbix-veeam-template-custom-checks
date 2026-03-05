@@ -2139,6 +2139,8 @@ zabbix_export:
             - uuid: f65200fb3d7b4a3382936875ecbb6d2d
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>3 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>5 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK01})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
               name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
@@ -2147,11 +2149,15 @@ zabbix_export:
                 - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
+                    last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>3 and
+                    last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>5 and
                     min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK02})>0 and
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
             - uuid: e82c1b81d2a245518b0bd6010cd23cda
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>3 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>5 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK02})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
               name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
@@ -2160,11 +2166,15 @@ zabbix_export:
                 - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
+                    last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>3 and
+                    last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>5 and
                     min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK03})>0 and
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
             - uuid: 26ae1460842a47d9bf5e3ada0d669291
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>3 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>5 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK03})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
               name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
@@ -2173,11 +2183,15 @@ zabbix_export:
                 - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
+                    last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>3 and
+                    last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>5 and
                     min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK04})>0 and
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
             - uuid: f7b2aa49a126483fb906f3e6a73cc986
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>3 and
+                last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])<>5 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK04})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
               name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
