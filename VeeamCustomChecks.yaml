@@ -2073,38 +2073,38 @@ zabbix_export:
               trigger_prototypes:
                 - uuid: aad20be643934792831353c89a962b5f
                   expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_NODATA01})=1'
-                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Status not updated'
+                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Status not updated'
                   priority: WARNING
                   dependencies:
-                    - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Status not updated'
+                    - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Status not updated'
                       expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_NODATA02})=1'
                 - uuid: 264963865e314cd8a3bf8ff5dddac6ab
                   expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_NODATA02})=1'
-                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Status not updated'
+                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Status not updated'
                   priority: AVERAGE
                   dependencies:
-                    - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Status not updated'
+                    - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Status not updated'
                       expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_NODATA03})=1'
                 - uuid: 9c7120ee85da46cf8b4070fdea58ebc8
                   expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_NODATA03})=1'
-                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Status not updated'
+                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Status not updated'
                   priority: HIGH
                   dependencies:
-                    - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Status not updated'
+                    - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Status not updated'
                       expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_NODATA04})=1'
                 - uuid: 2fca8b8dfdc742178e6664ab5a6d2a73
                   expression: 'nodata(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_NODATA04})=1'
-                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Status not updated'
+                  name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Status not updated'
                   priority: DISASTER
           trigger_prototypes:
             - uuid: 4ed2db25ed3f4e2eac45799bfba734e6
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.datediff[{#VEEAMJOB},{#VEEAMVM}])>={$VEEAM.CST_DLY_CHECK01} and 
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Delayed {ITEM.LASTVALUE}'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Delayed {ITEM.LASTVALUE}'
               priority: WARNING
               dependencies:
-                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Delayed {ITEM.LASTVALUE}'
+                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Delayed {ITEM.LASTVALUE}'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.datediff[{#VEEAMJOB},{#VEEAMVM}])>={$VEEAM.CST_DLY_CHECK02} and 
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
@@ -2112,10 +2112,10 @@ zabbix_export:
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.datediff[{#VEEAMJOB},{#VEEAMVM}])>={$VEEAM.CST_DLY_CHECK02} and 
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Delayed {ITEM.LASTVALUE}'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Delayed {ITEM.LASTVALUE}'
               priority: AVERAGE
               dependencies:
-                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Delayed {ITEM.LASTVALUE}'
+                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Delayed {ITEM.LASTVALUE}'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.datediff[{#VEEAMJOB},{#VEEAMVM}])>={$VEEAM.CST_DLY_CHECK03} and 
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
@@ -2123,10 +2123,10 @@ zabbix_export:
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.datediff[{#VEEAMJOB},{#VEEAMVM}])>={$VEEAM.CST_DLY_CHECK03} and 
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Delayed {ITEM.LASTVALUE}'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Delayed {ITEM.LASTVALUE}'
               priority: HIGH
               dependencies:
-                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Delayed {ITEM.LASTVALUE}'
+                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Delayed {ITEM.LASTVALUE}'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.datediff[{#VEEAMJOB},{#VEEAMVM}])>={$VEEAM.CST_DLY_CHECK04} and 
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
@@ -2134,17 +2134,17 @@ zabbix_export:
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.datediff[{#VEEAMJOB},{#VEEAMVM}])>={$VEEAM.CST_DLY_CHECK04} and 
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Delayed {ITEM.LASTVALUE}'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Delayed {ITEM.LASTVALUE}'
               priority: DISASTER
             - uuid: f65200fb3d7b4a3382936875ecbb6d2d
               expression: |
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK01})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Error found'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
               priority: WARNING
               dependencies:
-                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Error found'
+                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
                     min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK02})>0 and
@@ -2154,10 +2154,10 @@ zabbix_export:
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK02})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Error found'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
               priority: AVERAGE
               dependencies:
-                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Error found'
+                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
                     min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK03})>0 and
@@ -2167,10 +2167,10 @@ zabbix_export:
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK03})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Error found'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
               priority: HIGH
               dependencies:
-                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Error found'
+                - name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
                   expression: |
                     last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
                     min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK04})>0 and
@@ -2180,7 +2180,7 @@ zabbix_export:
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}])>0 and
                 min(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.status[{#VEEAMJOB},{#VEEAMVM}],{$VEEAM.CST_ERR_CHECK04})>0 and
                 last(/0_CST_TPL-Veeam Custom Checks/backup.veeam.customchecks.vm.monitored[{#VEEAMJOB},{#VEEAMVM}])=1
-              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}]] VM - Error found'
+              name: '[VEEAM-CST] [{#VEEAMJOB},{#VEEAMVM}] VM - Error found'
               priority: DISASTER
       macros:
         - macro: '{$VEEAM.CST.BLACKLIST}'
