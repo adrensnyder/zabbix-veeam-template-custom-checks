@@ -25,7 +25,7 @@
 ;###################################################################
 
 #AutoIt3Wrapper_Res_Description=VeeamCustomChecks
-#AutoIt3Wrapper_Res_Fileversion=1.5
+#AutoIt3Wrapper_Res_Fileversion=1.6
 #AutoIt3Wrapper_Res_ProductVersion=
 #AutoIt3Wrapper_Res_Language=
 #AutoIt3Wrapper_Res_LegalCopyright=Created by AdrenSnyder
@@ -242,6 +242,25 @@ Func _ApplyBlacklistMonitorEnabled($monitorEnabled, $name1, $name2 = "")
 	If _IsBlacklistedName($name1) Then Return -1
 	If $name2 <> "" And _IsBlacklistedName($name2) Then Return -1
 	Return $monitorEnabled
+EndFunc
+
+Func _IsEmptyGuid($value)
+	If $value = Null Then Return True
+	Local $normalized = StringStripWS(String($value), 8)
+	Return $normalized = "" Or $normalized = "00000000-0000-0000-0000-000000000000"
+EndFunc
+
+Func _IsAgentPolicyJob($job_type, $parent_job_id = "")
+	If $job_type = 12000 Or $job_type = 12002 Or $job_type = 12003 Then Return True
+	If $job_type = 4000 And Not _IsEmptyGuid($parent_job_id) Then Return True
+	Return False
+EndFunc
+
+Func _ResolveAgentMetricPrefix($job_type, $parent_job_id = "")
+	If _IsAgentPolicyJob($job_type, $parent_job_id) Then
+		Return "backup.veeam.customchecks.agent.policy"
+	EndIf
+	Return "backup.veeam.customchecks.agent.backup"
 EndFunc
 
 if ($sDriver = "" or $sDatabase = "" or $sServer = "") then
@@ -1567,21 +1586,24 @@ EndFunc
 Func _SqlAgentDiscovery($sDriver)
 	Local $sql = ""
 	If StringInStr($sDriver,"SQL Server") <> 0 Then
-		$sql = "SELECT CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
+		$sql = "SELECT CAST(j.id AS VARCHAR(255)) AS job_id, CAST(j.parent_job_id AS VARCHAR(255)) AS parent_job_id, " & @CRLF & _
+			   "       CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
 			   "       CAST(j.schedule_enabled AS VARCHAR(10)) AS schedule_enabled, " & @CRLF & _
 			   "       CAST(j.is_deleted AS VARCHAR(10)) AS is_job_deleted, " & @CRLF & _
 			   "       CAST(ISNULL(j.options.value('(//JobOptionsRoot/RunManually/text())[1]', 'VARCHAR(MAX)'), 'false') AS VARCHAR(255)) AS job_options_runmanually " & @CRLF & _
 			   "FROM " & $MSSQL_JobsView & " j " & @CRLF & _
 			   "WHERE j.type = 4000 AND j.is_deleted = 0 " & @CRLF & _
 			   "UNION " & @CRLF & _
-		"SELECT CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
+		"SELECT CAST(j.id AS VARCHAR(255)) AS job_id, CAST(j.parent_job_id AS VARCHAR(255)) AS parent_job_id, " & @CRLF & _
+		"       CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
 		"       CAST(j.schedule_enabled AS VARCHAR(10)) AS schedule_enabled, " & @CRLF & _
 		"       CAST(j.is_deleted AS VARCHAR(10)) AS is_job_deleted, " & @CRLF & _
 		"       CAST(ISNULL(j.options.value('(//JobOptionsRoot/RunManually/text())[1]', 'VARCHAR(MAX)'), 'false') AS VARCHAR(255)) AS job_options_runmanually " & @CRLF & _
 			   "FROM " & $MSSQL_JobsView & " j " & @CRLF & _
 			   "WHERE j.type = 12000 AND j.is_deleted = 0 AND j.parent_job_id IS NULL " & @CRLF & _
 			   "UNION " & @CRLF & _
-		"SELECT CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
+		"SELECT CAST(j.id AS VARCHAR(255)) AS job_id, CAST(j.parent_job_id AS VARCHAR(255)) AS parent_job_id, " & @CRLF & _
+		"       CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
 		"       CAST(j.schedule_enabled AS VARCHAR(10)) AS schedule_enabled, " & @CRLF & _
 		"       CAST(j.is_deleted AS VARCHAR(10)) AS is_job_deleted, " & @CRLF & _
 		"       CAST(ISNULL(j.options.value('(//JobOptionsRoot/RunManually/text())[1]', 'VARCHAR(MAX)'), 'false') AS VARCHAR(255)) AS job_options_runmanually " & @CRLF & _
@@ -1591,28 +1613,32 @@ Func _SqlAgentDiscovery($sDriver)
 			   "                  WHERE j2.type = 4000 AND j2.is_deleted = 0 " & @CRLF & _
 			   "                    AND j2.name LIKE j.name + ' - %') " & @CRLF & _
 			   "UNION " & @CRLF & _
-		"SELECT CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
+		"SELECT CAST(j.id AS VARCHAR(255)) AS job_id, CAST(j.parent_job_id AS VARCHAR(255)) AS parent_job_id, " & @CRLF & _
+		"       CAST(j.name AS VARCHAR(255)) AS job_name, CAST(j.type AS INT) AS job_type, " & @CRLF & _
 		"       CAST(j.schedule_enabled AS VARCHAR(10)) AS schedule_enabled, " & @CRLF & _
 		"       CAST(j.is_deleted AS VARCHAR(10)) AS is_job_deleted, " & @CRLF & _
 		"       CAST(ISNULL(j.options.value('(//JobOptionsRoot/RunManually/text())[1]', 'VARCHAR(MAX)'), 'false') AS VARCHAR(255)) AS job_options_runmanually " & @CRLF & _
 			   "FROM " & $MSSQL_JobsView & " j " & @CRLF & _
 			   "WHERE j.type = 12003 AND j.is_deleted = 0;"
 	Else
-		$sql = "SELECT name::TEXT AS job_name, type::INT AS job_type, " & @CRLF & _
+		$sql = "SELECT id::TEXT AS job_id, parent_job_id::TEXT AS parent_job_id, " & @CRLF & _
+			   "       name::TEXT AS job_name, type::INT AS job_type, " & @CRLF & _
 			   "       schedule_enabled::TEXT AS schedule_enabled, " & @CRLF & _
 			   "       is_deleted::TEXT AS is_job_deleted, " & @CRLF & _
 			   "       (xpath('//JobOptionsRoot/RunManually/text()', xmlparse(document options)))[1]::text AS job_options_runmanually " & @CRLF & _
 			   "FROM public." & chr(34) & "jobsview" & chr(34) & " " & @CRLF & _
 			   "WHERE type = 4000 AND is_deleted = false " & @CRLF & _
 			   "UNION " & @CRLF & _
-		"SELECT j.name::TEXT AS job_name, j.type::INT AS job_type, " & @CRLF & _
+		"SELECT j.id::TEXT AS job_id, j.parent_job_id::TEXT AS parent_job_id, " & @CRLF & _
+		"       j.name::TEXT AS job_name, j.type::INT AS job_type, " & @CRLF & _
 		"       j.schedule_enabled::TEXT AS schedule_enabled, " & @CRLF & _
 		"       j.is_deleted::TEXT AS is_job_deleted, " & @CRLF & _
 		"       (xpath('//JobOptionsRoot/RunManually/text()', xmlparse(document j.options)))[1]::text AS job_options_runmanually " & @CRLF & _
 			   "FROM public." & chr(34) & "jobsview" & chr(34) & " j " & @CRLF & _
 			   "WHERE j.type = 12000 AND j.is_deleted = false AND j.parent_job_id IS NULL " & @CRLF & _
 			   "UNION " & @CRLF & _
-		"SELECT j.name::TEXT AS job_name, j.type::INT AS job_type, " & @CRLF & _
+		"SELECT j.id::TEXT AS job_id, j.parent_job_id::TEXT AS parent_job_id, " & @CRLF & _
+		"       j.name::TEXT AS job_name, j.type::INT AS job_type, " & @CRLF & _
 		"       j.schedule_enabled::TEXT AS schedule_enabled, " & @CRLF & _
 		"       j.is_deleted::TEXT AS is_job_deleted, " & @CRLF & _
 		"       (xpath('//JobOptionsRoot/RunManually/text()', xmlparse(document j.options)))[1]::text AS job_options_runmanually " & @CRLF & _
@@ -1622,7 +1648,8 @@ Func _SqlAgentDiscovery($sDriver)
 			   "                  WHERE j2.type = 4000 AND j2.is_deleted = false " & @CRLF & _
 			   "                    AND j2.name LIKE (j.name || ' - %')) " & @CRLF & _
 			   "UNION " & @CRLF & _
-		"SELECT j.name::TEXT AS job_name, j.type::INT AS job_type, " & @CRLF & _
+		"SELECT j.id::TEXT AS job_id, j.parent_job_id::TEXT AS parent_job_id, " & @CRLF & _
+		"       j.name::TEXT AS job_name, j.type::INT AS job_type, " & @CRLF & _
 		"       j.schedule_enabled::TEXT AS schedule_enabled, " & @CRLF & _
 		"       j.is_deleted::TEXT AS is_job_deleted, " & @CRLF & _
 		"       (xpath('//JobOptionsRoot/RunManually/text()', xmlparse(document j.options)))[1]::text AS job_options_runmanually " & @CRLF & _
@@ -1643,6 +1670,8 @@ Func _SqlEndpointStatus($sDriver)
 			   ") " & @CRLF & _
 			   "SELECT CAST(j.id AS VARCHAR(255)) AS job_id, " & @CRLF & _
 			   "       CAST(j.name AS VARCHAR(255)) AS job_name, " & @CRLF & _
+			   "       CAST(j.type AS INT) AS base_job_type, " & @CRLF & _
+			   "       CAST(j.parent_job_id AS VARCHAR(255)) AS parent_job_id, " & @CRLF & _
 			   "       CAST(ls.job_type AS INT) AS job_type, " & @CRLF & _
 			   "       CAST(ISNULL(ls.result, -1) AS VARCHAR(255)) AS job_result, " & @CRLF & _
 			   "       CAST(ISNULL(ls.state, -1) AS VARCHAR(255)) AS job_state, " & @CRLF & _
@@ -1664,6 +1693,8 @@ Func _SqlEndpointStatus($sDriver)
 			   ") " & @CRLF & _
 			   "SELECT j.id::TEXT AS job_id, " & @CRLF & _
 			   "       j.name::TEXT AS job_name, " & @CRLF & _
+			   "       j.type::INT AS base_job_type, " & @CRLF & _
+			   "       j.parent_job_id::TEXT AS parent_job_id, " & @CRLF & _
 			   "       ls.job_type::INT AS job_type, " & @CRLF & _
 			   "       COALESCE(ls.result, -1)::TEXT AS job_result, " & @CRLF & _
 			   "       COALESCE(ls.state, -1)::TEXT AS job_state, " & @CRLF & _
@@ -1877,6 +1908,8 @@ EndFunc
 
 Func DiscoveryBackupSyncData($Recordset,$sDriver)
 	While Not $Recordset.EOF
+		Local $job_id = $Recordset.Fields("job_id").Value
+		Local $parent_job_id = $Recordset.Fields("parent_job_id").Value
 		Local $job_name_original = $Recordset.Fields("job_name").Value
 		Local $job_name = StringReplace($job_name_original,",","_")
 		Local $job_type = $Recordset.Fields("job_type").Value
@@ -1903,6 +1936,8 @@ EndFunc
 
 Func DiscoveryEndpointData($Recordset)
 	While Not $Recordset.EOF
+		Local $job_id = $Recordset.Fields("job_id").Value
+		Local $parent_job_id = $Recordset.Fields("parent_job_id").Value
 		Local $job_name_original = $Recordset.Fields("job_name").Value
 		Local $job_name = StringReplace($job_name_original,",","_")
 		Local $job_type = $Recordset.Fields("job_type").Value
@@ -1932,6 +1967,8 @@ Func DiscoveryAgentData($Recordset)
 	Local $BackupLog = ""
 
 	While Not $Recordset.EOF
+		Local $job_id = $Recordset.Fields("job_id").Value
+		Local $parent_job_id = $Recordset.Fields("parent_job_id").Value
 		Local $job_name_original = $Recordset.Fields("job_name").Value
 		Local $job_name = StringReplace($job_name_original,",","_")
 		Local $job_type = $Recordset.Fields("job_type").Value
@@ -1941,13 +1978,11 @@ Func DiscoveryAgentData($Recordset)
 		Local $MonitorEnabled = _IsJobMonitorEnabled($schedule_enabled, $is_job_deleted, $job_options_runmanually)
 		$MonitorEnabled = _ApplyBlacklistMonitorEnabled($MonitorEnabled, $job_name)
 		If $Debug > 0 Then
-			_logmsg($LogFile,"Agent Discovery -> JobName: " & $job_name_original & " | Type: " & $job_type,true,true)
+			_logmsg($LogFile,"Agent Discovery -> JobName: " & $job_name_original & " | Type: " & $job_type & _
+					" | ParentJobId: " & $parent_job_id & " | JobId: " & $job_id,true,true)
 		EndIf
 
-		Local $agent_prefix = "backup.veeam.customchecks.agent.backup"
-		If $job_type = 12000 Then
-			$agent_prefix = "backup.veeam.customchecks.agent.policy"
-		EndIf
+		Local $agent_prefix = _ResolveAgentMetricPrefix($job_type, $parent_job_id)
 		If $MonitorEnabled = 1 Then
 			If $agent_prefix = "backup.veeam.customchecks.agent.policy" Then
 				$AgentPolicyMonitoredCount += 1
@@ -1957,7 +1992,7 @@ Func DiscoveryAgentData($Recordset)
 		EndIf
 		$Zabbix_Items = _add_item_zabbix($Zabbix_Items,$agent_prefix & ".monitored[" & $job_name & "]",$MonitorEnabled)
 
-		If $job_type = 12000 Then
+		If $agent_prefix = "backup.veeam.customchecks.agent.policy" Then
 			$AgentPolicyCount += 1
 			$Array_Disc_AgentPolicy_Tmp &= $Comma_AgentPolicy & "{" & chr(34) & "{#AGENTJOB}" & chr(34) & ":" & chr(34) & $job_name & "" & chr(34) & "}"
 			$Comma_AgentPolicy = ","
@@ -2455,6 +2490,8 @@ Func TapeStatusData($Recordset)
 		Local $job_name_original = $Recordset.Fields("job_name").Value
 		Local $job_name = StringReplace($job_name_original,",","_")
 		Local $job_type = $Recordset.Fields("job_type").Value
+		Local $base_job_type = $Recordset.Fields("base_job_type").Value
+		Local $parent_job_id = $Recordset.Fields("parent_job_id").Value
 		Local $job_result = $Recordset.Fields("job_result").Value
 		Local $job_state = $Recordset.Fields("job_state").Value
 		Local $job_reason = $Recordset.Fields("job_reason").Value
@@ -2610,6 +2647,8 @@ Func EndpointStatusData($Recordset)
 		Local $job_name_original = $Recordset.Fields("job_name").Value
 		Local $job_name = StringReplace($job_name_original,",","_")
 		Local $job_type = $Recordset.Fields("job_type").Value
+		Local $base_job_type = $Recordset.Fields("base_job_type").Value
+		Local $parent_job_id = $Recordset.Fields("parent_job_id").Value
 		Local $job_result = $Recordset.Fields("job_result").Value
 		Local $job_state = $Recordset.Fields("job_state").Value
 		Local $job_reason = $Recordset.Fields("job_reason").Value
@@ -2623,17 +2662,16 @@ Func EndpointStatusData($Recordset)
 
 		If $Debug > 0 Then
 			_logmsg($LogFile,"Endpoint/Agent Status Raw -> JobName: " & $job_name_original & _
-					" | Type: " & $job_type & " | Result: " & $job_result & " | State: " & $job_state,true,true)
+					" | SessionType: " & $job_type & " | BaseType: " & $base_job_type & _
+					" | ParentJobId: " & $parent_job_id & " | Result: " & $job_result & " | State: " & $job_state,true,true)
 			_logmsg($LogFile,"Endpoint/Agent Status Raw -> Creation: " & $creation_time & " | End: " & $end_time,true,true)
 			_logmsg($LogFile,"Endpoint/Agent Status Calc -> CreationFmt: " & $creation_time_date & " | EndFmt: " & $end_time_date & _
 					" | Duration: " & $duration & " | DateDiff: " & $datediff,true,true)
 		EndIf
 
 		Local $prefix = "backup.veeam.customchecks.endpoint"
-		If $job_type = 12000 Then
-			$prefix = "backup.veeam.customchecks.agent.policy"
-		ElseIf $job_type = 4000 Or $job_type = 12002 Or $job_type = 12003 Then
-			$prefix = "backup.veeam.customchecks.agent.backup"
+		If $base_job_type = 4000 Or $base_job_type = 12000 Or $base_job_type = 12002 Or $base_job_type = 12003 Then
+			$prefix = _ResolveAgentMetricPrefix($base_job_type, $parent_job_id)
 		EndIf
 
 		$Zabbix_Items = _add_item_zabbix($Zabbix_Items,$prefix & ".result[" & $job_name & "]",$job_result)
