@@ -25,7 +25,7 @@
 ;###################################################################
 
 #AutoIt3Wrapper_Res_Description=VeeamCustomChecks
-#AutoIt3Wrapper_Res_Fileversion=1.5
+#AutoIt3Wrapper_Res_Fileversion=1.6
 #AutoIt3Wrapper_Res_ProductVersion=
 #AutoIt3Wrapper_Res_Language=
 #AutoIt3Wrapper_Res_LegalCopyright=Created by AdrenSnyder
